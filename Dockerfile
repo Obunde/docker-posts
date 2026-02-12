@@ -13,7 +13,10 @@ RUN gem install nokogiri --platform=ruby
 RUN bundle config set force_ruby_platform true
 RUN bundle install
 COPY . /blog_app
- 
+
+# Precompile Rails assets
+RUN RAILS_ENV=production bundle exec rails assets:precompile
+
 # Run every time the container is started.
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
